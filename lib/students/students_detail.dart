@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
 class StudentDetails extends StatefulWidget {
@@ -19,7 +18,6 @@ class _StudentDetailsState extends State<StudentDetails> {
     super.initState();
     personalDetails();
     print(widget.id);
-
   }
 
   void personalDetails()async{
@@ -40,13 +38,13 @@ class _StudentDetailsState extends State<StudentDetails> {
             child: studentData==null?  Center(child: CircularProgressIndicator()):Container(
               child: Column(
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(child: Text("Student Details",
                         style: TextStyle(color: Colors.black,fontSize: 26,fontWeight: FontWeight.w500),),)
                     ],),
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 40,),
                   CircleAvatar(
                     radius: 70,
                     backgroundColor: Colors.grey,
@@ -54,17 +52,15 @@ class _StudentDetailsState extends State<StudentDetails> {
                       "assets/user.jpg",
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Text(studentData["name"],style: TextStyle(fontWeight: FontWeight.w500,fontSize: 17),),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Text("Age : ${studentData["age"]}",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 17),),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Text(studentData["email"],style: TextStyle(fontWeight: FontWeight.w200,fontSize: 13),)
-
                 ],),
             ),
           ),
         ));
   }
 }
-

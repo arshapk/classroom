@@ -19,14 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
    const MyHomePage({Key? key}) : super(key: key);
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -93,11 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.yellow.shade800,
-            ),
-            onPressed: () async {
-
-            },
+              color: Colors.yellow.shade800,),
+            onPressed: () async {},
           )
         ],
       ),
@@ -172,12 +168,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                const Registration()));
                   },
                   title:const Center(child: Text("Registration")),
-
                 ),
               ),
               const SizedBox(height: 5,),]),
           )
-
         ),
       ),
     );

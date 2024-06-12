@@ -1,9 +1,6 @@
 import 'package:classroom/classroom/classroom_detail.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
-
 import '../constants.dart';
 
 class ClassRoom extends StatefulWidget {
@@ -18,6 +15,7 @@ class _ClassRoomState extends State<ClassRoom> {
   ScrollController? _controller;
   var classResponse;
   var len;
+
   void classList()async{
     Response response;
     response = await Dio().get(
@@ -26,19 +24,13 @@ class _ClassRoomState extends State<ClassRoom> {
       classResponse=response.data;
       len=classResponse.length;
     });
-
-    print(classResponse);
-
   }
+
   @override
   void initState() {
     super.initState();
     classList();
-
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +45,11 @@ class _ClassRoomState extends State<ClassRoom> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(child: Text("Class Rooms",
-                  style: TextStyle(color: Colors.black,fontSize: 26,fontWeight: FontWeight.w500),),)
-              ],),
+                  style: TextStyle(color: Colors.black,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500),),)
+              ],
+            ),
             const SizedBox(height: 40,),
             ListView.builder(
               controller: _controller,
@@ -82,10 +77,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                   builder: (context) =>
                                       Room(id: "${classResponse["classrooms"][i]["id"]}"
                                           , name: "${classResponse["classrooms"][i]["name"]}",
-                                          seat: "${classResponse["classrooms"][i]["size"]}"
-
-                                      )));
-                        }
+                                          seat: "${classResponse["classrooms"][i]["size"]}",)));}
                         );
                       },
                       child:  Padding(
@@ -99,7 +91,6 @@ class _ClassRoomState extends State<ClassRoom> {
                               SizedBox(
                                 width: 190.0,
                                 child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment:CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Row(
@@ -110,7 +101,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                           child: Text(
                                               "${classResponse["classrooms"][i]["layout"]}",
                                               overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
+                                              style:const TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
                                               )),
@@ -128,7 +119,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                 ),
                               ),
                               Padding(
-                                padding:  EdgeInsets.only(top: 0, bottom: 15),
+                                padding:const  EdgeInsets.only(top: 0, bottom: 15),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -143,7 +134,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                               "${classResponse["classrooms"][i]["size"]}",
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.end,
-                                              style: TextStyle(
+                                              style:const TextStyle(
                                                   fontSize: 13,
                                                   fontWeight:FontWeight.bold)),
                                         ),

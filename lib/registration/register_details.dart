@@ -1,17 +1,36 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
 import '../students/students_detail.dart';
 
 class RegistrationDetails extends StatefulWidget {
-  const RegistrationDetails({Key? key}) : super(key: key);
+  var id;
+   RegistrationDetails({Key? key,this.id}) : super(key: key);
 
   @override
   State<RegistrationDetails> createState() => _RegistrationDetailsState();
 }
 
 class _RegistrationDetailsState extends State<RegistrationDetails> {
+  var regResponse;
+  @override
+  void initState() {
+    super.initState();
+    registerList();
+  }
+
+  void registerList()async{
+    Response response;
+    response = await Dio().get(
+      "https://nibrahim.pythonanywhere.com/registration/${widget.id}?api_key=C09b3",);
+    setState(() {
+      regResponse=response.data;
+    });
+    print(regResponse);
+  }
 
   ScrollController? _controller;
   @override
@@ -159,8 +178,17 @@ class _RegistrationDetailsState extends State<RegistrationDetails> {
                               ),
                               CupertinoDialogAction(
                                 child:const Text("Yes"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
+                                onPressed: () async{
+                                var  response = await http.post(Uri.parse("https://nibrahim.pythonanywhere.com/registration/${widget.id}?api_key=3D91A"));
+                                                        var deleteresponse;
+                                                        if (response.statusCode == 200) {
+                                                          deleteresponse = jsonDecode(response.body);
+                                                          ToastAlert().toastfun("$deleteresponse");
+                                                        }
+                                                        else{
+                                                          ToastAlert().toastfun("$deleteresponse");
+                                                        }
+                                //  Navigator.of(context).pop();
                                 },
                               ),
                             ],
@@ -169,57 +197,6 @@ class _RegistrationDetailsState extends State<RegistrationDetails> {
                       );
                     }
                     showDialogInfo();
-                    // await showDialog(
-                    // context: context, builder: (context) {
-                    //   Future.delayed( const Duration(seconds: 10), () {});
-                    //   return Dialog(
-                    //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    //     child: DialogWidget(
-                    //         title: "Delete",
-                    //         msg:"Do you want to delete",
-                    //         msgStyle:const
-                    //         TextStyle(color: Colors.red,),
-                    //         actions: [
-                    //           TextButton(
-                    //             onPressed: () {
-                    //               Navigator.pop(context, 'Cancel');
-                    //             },
-                    //             child: Text(
-                    //               "No",
-                    //             ),
-                    //           ),
-                    //           // InkWell(
-                    //           //     borderRadius: BorderRadius.circular(10),
-                    //           //     onTap: () async {
-                    //           //       /// Function to delete general customer.
-                    //           //       var response;
-                    //           //       try {
-                    //           //         response = await http.post(Uri.parse(
-                    //           //           "$urlApi/customer/delete/${customerGeneral["data"]["General"][i]["id"]}?"
-                    //           //               "company_id=$companyID&"
-                    //           //               "domain=$domainCode&"
-                    //           //               "posting_date=$apiToDate&description=${"Customer Deleted by in Mobile"}",),
-                    //           //           headers: headers,);
-                    //           //         var deleteresponse;
-                    //           //         if (response.statusCode == 200) {
-                    //           //           deleteresponse = jsonDecode(response.body);
-                    //           //           if(!mounted)return;
-                    //           //           setState(() {
-                    //           //             deleteresponse = jsonDecode(response.body);
-                    //           //             String invDelete = Bidi.stripHtmlIfNeeded("${deleteresponse["message"]}");
-                    //           //             ToastAlert().toastfun("$invDelete");
-                    //           //             onRefresher();
-                    //           //             Navigator.pop(context, 'Delete');
-                    //           //           });
-                    //           //         }
-                    //           //       }
-                    //           //       catch (e) {}
-                    //           //     },
-                    //           //     child: deleteBox() // Confirmation of delete.
-                    //           // ),
-                    //         ]),
-                    //   );
-                    // });
                   },
                   child: Container(
                     height: 50,width: 170,
@@ -229,7 +206,6 @@ class _RegistrationDetailsState extends State<RegistrationDetails> {
                       style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)),
                   ),
                 )
-
               ],),
           ),
         ));
