@@ -28,7 +28,10 @@ class _RoomState extends State<Room> {
     Response response;
     response = await Dio().get(
       "https://nibrahim.pythonanywhere.com/classrooms/${widget.id}?api_key=C09b3",);
-    data=response.data;
+    setState(() {
+      data=response.data;
+    });
+
     print(data);
     //print(data["name"]);
   }
@@ -38,81 +41,83 @@ class _RoomState extends State<Room> {
         child: Scaffold(
           appBar:appBarCommon(context: context),
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(child: Text("${widget.name}",
-                      style: TextStyle(color: Colors.black,fontSize: 26,fontWeight: FontWeight.w500),),)
-                  ],),
-                const SizedBox(height: 40,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 14,right: 14),
-                  child: Card(
-                    elevation: 2,
-                    color: Colors.grey.shade50,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: ListTile(
-                      title: const Text("Add Subject",style: TextStyle(fontWeight: FontWeight.w500),),
-                      trailing: GestureDetector(
-                        onTap: ()async {
+            child:data==null?  Center(child: CircularProgressIndicator()):Container(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(child: Text("${widget.name}",
+                        style: TextStyle(color: Colors.black,fontSize: 26,fontWeight: FontWeight.w500),),)
+                    ],),
+                  const SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 14,right: 14),
+                    child: Card(
+                      elevation: 2,
+                      color: Colors.grey.shade50,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: ListTile(
+                        title: const Text("Add Subject",style: TextStyle(fontWeight: FontWeight.w500),),
+                        trailing: GestureDetector(
+                          onTap: ()async {
 
-                          // var response = await http.post(Uri.parse("https://nibrahim.pythonanywhere.com/clasrooms/${widget.id}?api_key=C09b3"
-                          //     "&subject=",
-                          // ));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Subject(register: 0,)));
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 100,
-                          decoration: BoxDecoration(color: Colors.green.shade50,borderRadius: BorderRadius.circular(8)),
-                          child:const Center(child: Text("Add",style: TextStyle(color: Colors.green),)),),
+                            // var response = await http.post(Uri.parse("https://nibrahim.pythonanywhere.com/clasrooms/${widget.id}?api_key=C09b3"
+                            //     "&subject=",
+                            // ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Subject(register: 0,)));
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 100,
+                            decoration: BoxDecoration(color: Colors.green.shade50,borderRadius: BorderRadius.circular(8)),
+                            child:const Center(child: Text("Add",style: TextStyle(color: Colors.green),)),),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10,),
+                  SizedBox(height: 10,),
 
-                ListView.builder(
-                    controller: _controller,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    padding:  EdgeInsets.only(),
-                    itemCount: data.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, i) {
-                      return Padding(
-                          padding: EdgeInsets.only(left: 20,right:20),
-                          child: Row(
-                            children: [
-                              Icon(Icons.switch_right),
-                              SizedBox(width: 20,),
-                              Expanded(
-                                child: Container(
-                                  height: 60,
-                                  color: Colors.grey.shade200,),
-                              ),
-                              SizedBox(width: 20,),
-                              // Column(
-                              //   mainAxisAlignment: MainAxisAlignment.start,
-                              //   children: List.generate(data["size"], (index) =>
-                              Icon(Icons.switch_right),
-                              //  ),
-                              //   ),
-
-
-                            ],
-                          ));}),
-                SizedBox(height: 20,)
+                  ListView.builder(
+                      controller: _controller,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      padding:  EdgeInsets.only(),
+                      itemCount: data.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, i) {
+                        return Padding(
+                            padding: EdgeInsets.only(left: 20,right:20),
+                            child: Row(
+                              children: [
+                                Icon(Icons.switch_right),
+                                SizedBox(width: 20,),
+                                Expanded(
+                                  child: Container(
+                                    height: 60,
+                                    color: Colors.grey.shade200,),
+                                ),
+                                SizedBox(width: 20,),
+                                // Column(
+                                //   mainAxisAlignment: MainAxisAlignment.start,
+                                //   children: List.generate(data["size"], (index) =>
+                                Icon(Icons.switch_right),
+                                //  ),
+                                //   ),
 
 
-              ],),
+                              ],
+                            ));}),
+                  SizedBox(height: 20,)
+
+
+                ],),
+            ),
           ),
         )
     );

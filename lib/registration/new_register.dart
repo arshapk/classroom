@@ -74,7 +74,7 @@ class _NewRegisterState extends State<NewRegister> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                            const Register()));
+                            const NewRegister()));
                   },
                   child: Container(
                     height: 60,width: 120,

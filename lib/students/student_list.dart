@@ -95,7 +95,6 @@ class _StudentState extends State<Student> {
                                     SizedBox(
                                       width: 220.0,
                                       child: Column(
-
                                         crossAxisAlignment:CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Row(

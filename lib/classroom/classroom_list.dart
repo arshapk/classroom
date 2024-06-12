@@ -22,8 +22,11 @@ class _ClassRoomState extends State<ClassRoom> {
     Response response;
     response = await Dio().get(
       "https://nibrahim.pythonanywhere.com/classrooms/?api_key=C09b3",);
-    classResponse=response.data;
-    len=classResponse.length;
+    setState(() {
+      classResponse=response.data;
+      len=classResponse.length;
+    });
+
     print(classResponse);
 
   }
@@ -41,7 +44,9 @@ class _ClassRoomState extends State<ClassRoom> {
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
       appBar: appBarCommon(context: context),
-      body:classResponse["classrooms"]==null||classResponse==null?const Text("No Data Found"): SingleChildScrollView(
+      body:classResponse==null?
+      const Center(child: CircularProgressIndicator()):
+      SingleChildScrollView(
         child: Column(
           children: [
             const Row(
@@ -84,7 +89,7 @@ class _ClassRoomState extends State<ClassRoom> {
                         );
                       },
                       child:  Padding(
-                        padding:  EdgeInsets.only(top: 15, bottom: 2,right: 8,left: 8),
+                        padding: const EdgeInsets.only(top: 15, bottom: 2,right: 8,left: 8),
                         child: SizedBox(
                           height: 55,
                           child: Row(
@@ -155,7 +160,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 13,
                                                   fontWeight:FontWeight.bold)),
                                         ),
                                       ],
