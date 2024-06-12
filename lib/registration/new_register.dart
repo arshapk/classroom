@@ -75,6 +75,7 @@ var _formKey = GlobalKey<FormState>();
                   decoration: InputDecoration(
                     counterText: "",
                     filled: true,
+
                     fillColor: HexColor("#D1D1D1"),
                     contentPadding: const EdgeInsets.only(left: 10,right: 10),
                     focusedBorder: OutlineInputBorder(
