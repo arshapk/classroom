@@ -1,10 +1,10 @@
+import 'dart:convert';
 import 'package:classroom/classroom/classroom_detail.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
+import 'package:http/http.dart' as http;
 
 class ClassRoom extends StatefulWidget {
-
   ClassRoom({Key? key}) : super(key: key);
 
   @override
@@ -17,11 +17,10 @@ class _ClassRoomState extends State<ClassRoom> {
   var len;
 
   void classList()async{
-    Response response;
-    response = await Dio().get(
-      "https://nibrahim.pythonanywhere.com/classrooms/?api_key=C09b3",);
+    var response = await http.get(
+      Uri.parse("https://nibrahim.pythonanywhere.com/classrooms/?api_key=C09b3"),);
     setState(() {
-      classResponse=response.data;
+      classResponse=jsonDecode(response.body);
       len=classResponse.length;
     });
   }
@@ -34,10 +33,12 @@ class _ClassRoomState extends State<ClassRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
       appBar: appBarCommon(context: context),
       body:classResponse==null?
-      const Center(child: CircularProgressIndicator()):
+      const Center(
+          child: CircularProgressIndicator()):
       SingleChildScrollView(
         child: Column(
           children: [
@@ -46,8 +47,8 @@ class _ClassRoomState extends State<ClassRoom> {
               children: [
                 Center(child: Text("Class Rooms",
                   style: TextStyle(color: Colors.black,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w500),),)
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700),),)
               ],
             ),
             const SizedBox(height: 40,),
@@ -63,7 +64,7 @@ class _ClassRoomState extends State<ClassRoom> {
                   padding: const EdgeInsets.only(top: 6, left: 7, right: 7),
                   child: Card(
                     elevation: 0,
-                    color: Colors.grey.shade100,
+                    color: HexColor("#D1D1D1"),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     child: InkWell(
@@ -102,7 +103,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                               "${classResponse["classrooms"][i]["layout"]}",
                                               overflow: TextOverflow.ellipsis,
                                               style:const TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 17.0,
                                                 fontWeight: FontWeight.bold,
                                               )),
                                         ),
@@ -112,6 +113,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                       children: [
                                         Text(
                                           "${classResponse["classrooms"][i]["name"]}",
+                                          style:const TextStyle(fontSize: 13,fontWeight: FontWeight.w400),
                                         ),
                                       ],
                                     ),
@@ -135,7 +137,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.end,
                                               style:const TextStyle(
-                                                  fontSize: 13,
+                                                  fontSize: 17,
                                                   fontWeight:FontWeight.bold)),
                                         ),
                                       ],
@@ -152,7 +154,7 @@ class _ClassRoomState extends State<ClassRoom> {
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
                                                   fontSize: 13,
-                                                  fontWeight:FontWeight.bold)),
+                                                  fontWeight:FontWeight.w400)),
                                         ),
                                       ],
                                     ),
@@ -170,6 +172,6 @@ class _ClassRoomState extends State<ClassRoom> {
             ),
           ],),
       ),
-    ));
+    );
   }
 }

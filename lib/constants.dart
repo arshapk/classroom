@@ -16,6 +16,7 @@ class HexColor extends Color {
 ///Common AppBar
 PreferredSizeWidget appBarCommon({required context}){
   return AppBar(
+    backgroundColor:Colors.white,
       leading:IconButton(
         icon: const Icon(
           Icons.arrow_back_ios,
@@ -27,7 +28,7 @@ PreferredSizeWidget appBarCommon({required context}){
 }
 ///Flutter Toast
 class ToastAlert {
-  void toastfun(String ss) {
+  void toast(String ss) {
     Fluttertoast.showToast(
         msg: ss,
         toastLength: Toast.LENGTH_SHORT,
